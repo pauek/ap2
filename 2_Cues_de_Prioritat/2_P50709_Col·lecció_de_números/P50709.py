@@ -39,11 +39,12 @@ def process_commands(cmds: list[str]):
     heap = Heap()
     pos = 0
     while pos < len(cmds):
-        func, skip, check_empty = opinfo[cmds[pos]]
-        if check_empty and len(heap) == 0:
+        func, skip, unsafe = opinfo[cmds[pos]]
+        if unsafe and not heap:
             print(f"error!")
         else:
-            func(heap, int(cmds[pos + 1]) if skip == 2 else 0)
+            arg = int(cmds[pos + 1]) if skip == 2 else 0
+            func(heap, arg)
         pos += skip
 
 
